@@ -1,0 +1,55 @@
+8. Obtener el número de lectores que hay en cada provincia.
+    db.LECTOR.aggregate([
+  { $group: {
+      _id: "$PROVINCIA",
+      totalLectores: { $sum: 1 }
+  }},
+  { $sort: { _id: 1 } }
+]);
+
+9. Obtener los nombres de los lectores y los títulos de los libros que han tenido en préstamo cada uno de ellos
+db.PRESTAMO.aggregate([
+  { $lookup: {
+      from: "LECTOR",
+      localField: "IDLECTOR",
+      foreignField: "_id",
+      as: "LECTOR"
+  }},
+  { $unwind: "$LECTOR" },
+  { $lookup: {
+      from: "LIBRO",
+      localField: "ISBN",
+      foreignField: "ISBN",
+      as: "LIBRO"
+  }},
+  { $unwind: "$LIBRO" },
+  { $project: {
+      _id: 0,
+      lector: "$LECTOR.NOMBRE",
+      libro: "$LIBRO.TITULO"
+  }}
+]);
+
+10. Para cada lector, obtener su nombre y los nombres de los autores de los libros que ha leído.
+
+db.PRESTAMO.aggregate([
+  { $lookup: {
+      from: "LECTOR",
+      localField: "IDLECTOR",
+      foreignField: "_id",
+      as: "LECTOR"
+  }},
+  { $unwind: "$LECTOR" },
+  { $lookup: {
+      from: "LIBRO",
+      localField: "ISBN",
+      foreignField: "ISBN",
+      as: "LIBRO"
+  }},
+  { $unwind: "$LIBRO" },
+  { $project: {
+      lector: "$LECTOR.NOMBRE",
+      autores: "$LIBRO.AUTORES"
+  }}
+]);
+
