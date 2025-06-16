@@ -33,7 +33,7 @@ todas las tablas que sea necesario.
 8. El lector Francisco Roldán se ha dado de baja en la biblioteca, por tanto debe ser dado de baja en la base de datos. (Atención, deberá dar de baja todos los registros
 que tengan que ver con ese alumno en todas las tablas y además en el orden adecuado).
     delete from prestamo where codigo = (select codigo from lector where nombre='Francisco' and ape_1='Roldan');
-    delete from lector hwere nombre='Francisco' and ape_1='Roldan';
+    delete from lector where nombre='Francisco' and ape_1='Roldan';
 
 9. Incrementar en dos unidades disponibles por sucursal el libro del que más préstamos se realizan.
     update dispone set num_ejemplares=num_ejemplares+2, num_disponibles = num_disponibles+2 where isbn in (select isbn from prestamo p group by isbn having count(*)=max(count(*)) group by isbn);

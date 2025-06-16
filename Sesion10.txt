@@ -43,7 +43,7 @@ db.AUTOR.find({"ANO_FALL":{$exists:true}})
 */
 db.AUTOR.find({"NACION":"FRANCIA", "ANO_FALL":{$exists:false}}, {"NOMBRE":1, "APELLIDO":1, "_id":0})
 
-/*13 Obtener los autores que no sean ni italianos ni alemanes
+/*13 Obtener los autores que no sean ni italianos ni franceses
 */
 db.AUTOR.find({"NACION":{"$nin":["ITALIA", "FRANCIA"]}}, {"NOMBRE":1, "APELLIDO":1, "NACION":1, "_id":0}).sort({"NACION":1})
 
@@ -59,7 +59,8 @@ db.AUTOR.find({"LIBROS.TITULO":"LA DIVINA COMEDIA"})
 */
 db.AUTOR.update({"APELLIDO":"SIERRA"}, {$push:{"LIBROS":{"TITULO":"EL FUEGO INVISIBLE", "ISBN":"9788408178941", "ANO_EDICION":2017}}})
 
-/*16.	A�ade una nueva autora a la base de datos: Ayanta Barilli, de nacionalidad espa�ola e italiana, nacida en 1969 y autora de los libros �Pacto de sangre�, editado en 2013 y �Un mar violeta oscuro�, editado por Planeta en 2018. 
+/*16.	A�ade una nueva autora a la base de datos: Ayanta Barilli, de nacionalidad espa�ola e italiana, nacida en 1969 y autora de los libros �Pacto de sangre�,
+ editado en 2013 y �Un mar violeta oscuro�, editado por Planeta en 2018. 
 */
 db.AUTOR.insert({"NOMBRE":"AYANTA", "APELLIDO":"BARILLI", "ANO_NAC":1969, "NACION":["ESPANA", "ITALIA"],
    LIBROS:[{"TITULO":"PACTO DE SANGRE", "ANO_EDICION":2013}, {"TITULO":"UN MAR VIOLETA OSCURO", "ANO_EDICION":2018}]})

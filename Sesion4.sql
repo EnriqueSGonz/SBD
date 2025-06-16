@@ -26,11 +26,10 @@ create table REGISTRO(ID integer not null primary key, FECHA date default sysdat
     select clave_reg.NEXTVAL into :NEW.ID from DUAL;
     END;
     /
-
     
     b) Insertar, modificar y borrar varias tuplas en las tablas PROYECTO y DEPARTAMENTO y consultar el contenido de la tabla REGISTRO para
     comprobar que los disparadores han funcionado correctamente.
-    create trigger INS_PROY
+create trigger INS_PROY
 after insert on PROYECTO 
 for each row
 BEGIN

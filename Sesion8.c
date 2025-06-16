@@ -97,7 +97,7 @@ int main(){
         
         exec sql update Dispone set Num_Disponibles = :disponibles+2, Num_Ejemplares = :ejemplares+2 where current of micursor;
 
-       EXEC sql fetch cur1 into :codSuc,:ISBN,:numEjemplares,:numDisponibles;
+        EXEC sql fetch cur1 into :codSuc,:ISBN,:numEjemplares,:numDisponibles;
     }
     //Comprobación de errores
     EXEC sql close cur1;
@@ -235,7 +235,7 @@ int main(){
     printf ("CONEXION: %d, %s\n", sqlca.sqlcode, sqlca.sqlerrm.sqlerrmc);
 
     EXEC sql DECLARE cur1 CURSOR for SELECT p.Cod_Suc, p.ISBN, l.Titulo, COUNT(*) AS Num_Prestamos
-    FROM PRESTAMO p, libro l where p.isbn0l.isbn
+    FROM PRESTAMO p, libro l where p.isbn
     GROUP BY p.Cod_Suc, p.ISBN, l.Titulo
     HAVING COUNT(*) = (
     SELECT MAX(COUNT(*))

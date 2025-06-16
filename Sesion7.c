@@ -146,7 +146,7 @@ int main(){
 
 8. Codificar un programa que utilizando SQL inmerso en C permita modificar la dirección, población y provincia de un lector.
 El programa, inicialmente, debe pedir al usuario el código del lector. Si dicho lector no existe mostrará un mensaje de error
-indicando que no existe y por tanto no se puede modificar; en caso contrario pedirá al usuario los nuevos valores para los atributos 
+indicando que no existe y por tanto no se puede modificar, en caso contrario pedirá al usuario los nuevos valores para los atributos 
 dirección, población y provincia y actualizará dichos datos para el lector especificado. Si el usuario no proporciona
 valor para alguno de los atributos, estos deben actualizarse con valor nulo.
 
