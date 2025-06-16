@@ -1,0 +1,61 @@
+CLIENTE(Login(PK),Nombre,Apellido)
+PLATAFORMA(IDPlataforma(PK),precioBase,nombre)
+SUBSCRITO(IDPlataforma(PK),LoginCliente(PK),fecha)
+
+/*Sacar nombre de cada plataforma poniendo su facturación por clientes y sacar nombre y apellidos de los clientes subscritos, si la fecha es NULL escribir ACTUALMENTE
+
+#include <stdlib.h>
+EXEC SQL INCLUDE sqlca
+
+int main(){
+
+	EXEC BEGIN DECLARE SECTION
+	short v_ind;
+	char nombre[15],apellido[30],fecha[11],nombrePlataforma[20];
+	int facturacionTotal,IDPlataforma;
+	char oracleid[]="/";
+	EXEC END DECLARE SECTION
+
+	int platActual=0;
+	exec sql connect :oracleid;	
+
+	EXEC DECLARE cur1 CURSOR for select IDPlataforma,nombre, count(*)*precioBase as facturacion group by idplataforma from subscrito s, plataforma p where p.idplataforma=s.idplataforma;
+
+	EXEC DECLARE cur2 CURSOR for select nombre,apellido,fecha from subscrito s, cliente c where s.loginCliente=c.cliente and s.IDPlataforma=:IDPlataforma;
+
+	EXEC SQL OPEN cur1;
+	EXEC SQL fetch cur1 into :IDPlataforma,:nombrePlataforma,:facturacionTotal;
+
+	while(sqlca.sqlcode==0){
+	
+	if(IDPlataforma!=platActual){
+	
+	printf("%s\t%d",:nombrePlataforma,:facturacionTotal);
+	platActual=IDPlataforma;
+	}
+
+	EXEC SQL OPEN cur2;
+	EXEC SQL fetch cur2 into :nombre,:apellido,:fecha:v_ind;
+
+	while(sqlca.sqlcode==0){
+	
+	if(v_ind==-1){
+	
+	printf("%s\t%s\tACTUALMENTE",:nombre,:apellido);
+	}else{
+	printf("%s\t%s\t%s",:nombre,:apellido,:fecha);
+	}
+	EXEC SQL fetch cur2 into :nombre,:apellido,:fecha:v_ind;
+	}
+
+	EXEC SQL CLOSE cur2;
+	EXEC SQL fetch cur1 into :IDPlataforma,:nombrePlataforma,:facturacionTotal;
+}
+	EXEC SQL CLOSE cur1;
+	exec sql commit work release;
+
+} 
+
+
+
+}
